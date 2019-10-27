@@ -9,9 +9,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      simpsone: [],
-      citation:''
+      simpsone: []
     };
+    this.onClick = this.onClick.bind(this);
   }
   componentDidMount(){
   axios.get('https://quests.wilders.dev/simpsons-quotes/quotes')
@@ -21,18 +21,22 @@ class App extends React.Component {
      })
    })
  }
- handleClick(){
-  this.setState({
-    citation:`${this.state.simpsone.quote}`
+ onClick(){
+  axios.get('https://quests.wilders.dev/simpsons-quotes/quotes')
+  .then(response =>{
+    this.setState({
+     simpsone:response.data[0]
+    })
   })
-  console.log(this.state.citation)
  }
+
+ 
   render() {
-    console.log(this.state.citation)
+   
     return (
       <div className="App">
         <SimpsoneUniverse simpsone={this.state.simpsone} />
-        <button type="button" onClick={this.handleClik}>Get citation</button>
+        <button type="button" onClick={this.onClick}>Get citation</button>
       </div>
     );
   }
